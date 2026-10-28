@@ -287,7 +287,7 @@ function isDark(){
   const t=root.dataset.theme;
   return t ? t==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
 }
-function paint(){ tb.textContent=isDark()?"☀️":"🌙"; }
+function paint(){ tb.textContent=isDark()?"🔆":"🌙"; }
 try{ const s=localStorage.getItem("hub-theme"); if(s) root.dataset.theme=s; }catch(e){}
 tb.onclick=()=>{
   const next=isDark()?"light":"dark"; root.dataset.theme=next;
