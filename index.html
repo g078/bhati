@@ -44,11 +44,12 @@ h1{
 @keyframes pop{from{transform:rotate(-9deg) scale(.55);opacity:0}to{transform:rotate(-2deg) scale(1);opacity:1}}
 .actions{display:flex;align-items:center;gap:14px}
 .burst{
-  display:grid;place-items:center;width:58px;height:58px;padding:0;cursor:pointer;font:inherit;line-height:1;font-weight:800;font-size:30px;
-  background:var(--pink);color:#15121a;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--shadow);
+  display:block;width:58px;height:58px;padding:0;overflow:hidden;cursor:pointer;
+  background:var(--yellow);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--shadow);
   border-radius:50% 46% 54% 48%/48% 54% 46% 52%;transform:rotate(9deg);
   transition:transform .15s,box-shadow .15s;
 }
+.burst img{display:block;width:100%;height:100%;object-fit:cover}
 .burst:hover{transform:rotate(-8deg) scale(1.08)}
 .burst:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--shadow)}
 .theme{
@@ -97,15 +98,35 @@ h1{
 .tile small{display:block;font-weight:500;font-size:12.5px;opacity:.75;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tile:hover{transform:translate(-3px,-5px) rotate(-1.5deg) scale(1.03);box-shadow:10px 10px 0 var(--shadow)}
 .tile:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--shadow)}
-.tile:focus-visible,.chip:focus-visible,.theme:focus-visible,.burst:focus-visible{outline:4px solid var(--blue);outline-offset:3px}
+.tile:focus-visible,.chip:focus-visible,.theme:focus-visible,.burst:focus-visible,.about .x:focus-visible{outline:4px solid var(--blue);outline-offset:3px}
 .tile.first{outline:4px dashed var(--ink);outline-offset:4px}
 .tile[hidden]{display:none}
 .empty{display:none;margin-top:10px;padding:24px;border:3px dashed var(--ink);border-radius:18px;background:var(--card);font-weight:800;font-size:18px;text-align:center}
 .empty.show{display:block}
+/* about card */
+dialog{
+  width:min(440px,92vw);padding:0;color:var(--ink);background:var(--card);
+  border:3px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--shadow);overflow:visible;
+}
+dialog::backdrop{background:rgba(21,18,26,.6)}
+dialog[open]{animation:pop2 .35s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes pop2{from{transform:scale(.7) rotate(-4deg);opacity:0}to{transform:none;opacity:1}}
+.about{position:relative;padding:26px 22px 22px;font-size:16px;line-height:1.5}
+.about h2{
+  display:inline-block;margin:0 0 16px;font-size:24px;font-weight:800;color:#15121a;background:var(--yellow);
+  border:3px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--shadow);padding:6px 14px;transform:rotate(-2deg);
+}
+.about p{margin:0 0 12px}
+.about .tag{display:inline-block;font-weight:800;font-size:14px;color:#15121a;background:var(--mint);border:2px solid var(--ink);border-radius:999px;padding:1px 10px;margin-right:6px}
+.about .x{
+  position:absolute;top:-16px;right:-12px;width:40px;height:40px;border-radius:50%;cursor:pointer;
+  font:inherit;font-weight:800;font-size:18px;color:#15121a;background:var(--pink);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--shadow);
+}
+.about .x:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--shadow)}
 @media (max-width:480px){
   .grid{grid-template-columns:1fr}
   .search kbd{display:none}
-  .burst{width:52px;height:52px;font-size:26px}
+  .burst{width:52px;height:52px}
   .doodles{display:none}
 }
 @media (prefers-reduced-motion:reduce){
@@ -121,7 +142,7 @@ h1{
       <h1>🚩 बन्ना 🚩</h1>
     </div>
     <div class="actions">
-      <button class="burst" id="knight" type="button" aria-label="Show all sites" title="Show all sites">🥷</button>
+      <button class="burst" id="aboutBtn" type="button" aria-label="About SITEHUB" title="About SITEHUB"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAGFBMVEX96xn95Bn85Bn84hn3whrfJh3dFh3cDx0sO1pOAAADHklEQVR42u3X0W/bRBzA8e8lKU0BO+dQISUjxEknoY1UKel/AKuExBPjr+SBSvwB6R4stLE2jLZBPCwLMw88gFK7zSpdLNrjIZMWt2en1BIC5Hs52Xe/j893P9/Jok1acQZbx90wrUdpSfyOlF6qUFoS30OSKhSdxCYhf9jpBapQffepq24BiMqPD3oBkC4kAqJy+FkvAKDQLn3fUn8TENbRp6/jIWqvPkkSEgBhHb+Jh6hVfpwgmAFhDRfjIXLL37XVjQFhDb+8F1+6yF0zCyZAWMOHratLH7lvGwUDIKzhQ/d66kRuvW8QrgPiYvSVa0q9Wa1mEK4BzvmrL5rm1FUm4SrgTNa3m0mpr+rXhSuA8+KDjWbyp6PqtX5VqmTAGXTS4kHVa+dnMSEGOIMHd1LjQdVFXFgExE877y2JnwtH0gzYm+1VBcuFlbU33QoLAxj2NDcowcbdQ0wA3CgeAhczILhFKZCx5EAM0O5Ng4T5aJPFjCO4zDwHTviPTWIzaypLmTQCYaxOF640ENqJr2CPJcDF6cLF61pMJEDFl7GhxgHxyyMfYBQC4mB+IcYDH7BHh4AY9f1EQGIfbIbApbcnwfI6JxKwB91dCfq4L8F+Ob9pHoHYL073JIy2dIg42Jo+8kE8n5694yPGbucQ9PG07ycAUyZehQ99Lr2g42N5WnfGEvvbpm7tSk4qxb4Uo67ufiONm6rwPx85IXZJPndUeXZ/vxoS/Xxn7dc/IPpz/f2vy7PGK/u3mYoa07d84yuMvRCme7YXcvbswtOgNyFsgm7tatDFfsUL0dO9om8awelKTYEIS44CeV4NgdX18mSmIApWHMXMmmmARuGlNJwLjakCaOyXAY5WWQBwn5aB6mMJEA0+UaZJrMyrLgDdeIaddgGCrXk2bofGDSVcrK58mfG7Qb4r50AO/A+BkpPafIFGpHYpjVMB/ZEgvUcp/fcffVJsZwHEJNyoZpkD8fuLuzLbKrSyLqPOUzkHciAHciAH/lWAyAo8W9Je3F7ygI8ppx/vSx7QXvy9uQ0Q5HmQAzmQAzmQAznwXwP+AtpVIfLaIJ3QAAAAAElFTkSuQmCC"></button>
       <button class="theme" id="theme" aria-label="Switch light or dark theme">🌙</button>
     </div>
   </header>
@@ -138,57 +159,71 @@ h1{
   <div class="empty" id="empty">No site matches that. Clear the search or pick All.</div>
 </div>
 
+<dialog id="about" aria-labelledby="aboutTitle">
+  <div class="about">
+    <button class="x" id="aboutClose" type="button" aria-label="Close">✕</button>
+    <h2 id="aboutTitle">🥷 About SITEHUB</h2>
+    <p><span class="tag">Made by</span>Ghyan Singh Bhati</p>
+    <p><span class="tag">From</span>Talanpur, Rajasthan</p>
+    <p>SITEHUB is my personal collection of handpicked websites, all in one place. It brings together study sites, AI tools, coding help, games, movies, shopping and handy everyday tools. Search for a site or pick a category, and open it in one tap.</p>
+    <p><span class="tag">Total sites</span><b id="total"></b></p>
+  </div>
+</dialog>
+
 <script>
 const COLORS = {
   Watch:"var(--red)", Games:"var(--green)", Study:"var(--blue)", AI:"var(--lilac)", Code:"var(--mint)",
   Create:"var(--orange)", Apps:"var(--sky)", Tools:"var(--yellow)", Shop:"var(--pink)"
 };
-// [number, name, url, category]  -> all 44 sites, same order as your original
+// TO ADD A SITE: add one new line at the END of this list, like:
+//   ["Name","https://link.com","Tools"],
+// Number, counts and totals update automatically.
+// Categories: Watch, Games, Study, AI, Code, Create, Apps, Tools, Shop
 const SITES = [
-  [1,"Rolexcoderz","https://www.rolexcoderz.in/","Study"],
-  [2,"Multimovies🎞️","https://multimovies.watch/","Watch"],
-  [3,"Filmyfly🎞️","https://1filmyfly.fyi/","Watch"],
-  [4,"Moviesmod🎬","https://modlist.in/","Watch"],
-  [5,"Malvida","https://www.malavida.com/en/android/cat/games","Games"],
-  [6,"Pc Games🎮","https://gamesleech.com","Games"],
-  [7,"App Download Pc💻","https://softwareleech.com","Apps"],
-  [8,"Free games🎮","https://www.freegames33.com/","Games"],
-  [9,"Poki games🎮","https://poki.com/","Games"],
-  [10,"Chatgpt","https://www.google.com/aclk?sa=L&pf=1&ai=DChsSEwjjuNH7zPeTAxUQhmYCHRRaAAIYACICCAEQABoCc20&co=1&ase=2&gclid=CjwKCAjw14zPBhAuEiwAP3-Eb9IwjyYRKQ6hYfA1VeqLv0-0WDC77LdE8huUDTiTrMpwyIvlp9xBgxoC6TIQAvD_BwE&cid=CAAS0wHkaNUjsiT9zO-oQNJnfE4H0Gmx9ZRa7KV7jMmpzODpj1ETUKRL_Of4IhVGlXMvvYLp9hFVMgVQJQAShYZADeEu1B_4iIQ6Hn56-NvAVzByenLF3j_8zAqMk-TnaREjq1tKAl5_2xg6QnutuwGKErxVy5K88CTM0W_Rr6pRbxhF4RG1ClACHP1bsmCbb3II0nrqAqFo0qgtJqjj19DqMgAqm2znlgDZ1gxlc9DLGpz-7jeZiZ9ioz6jC867i2q3iWnsT21vxCFAYxifutbzYwrO1NEr&cce=2&category=acrcp_v1_32&sig=AOD64_3sMgKhiMrJjK82pccsltoHPF6fLA&q&nis=4&adurl=https://chatgpt.com","AI"],
-  [11,"Physicswala📊","https://rolexcoderz.in/PW/","Study"],
-  [12,"Nexttoppers🎓","https://rolexcoderz.in/NT/","Study"],
-  [13,"Cricify🏏","https://cricify.org/download/","Watch"],
-  [14,"Share file📁","https://file.pizza","Tools"],
-  [15,"PW2","https://www.pwjarvis.com/","Study"],
-  [16,"FREE AI TOOL","https://www.toolify.ai/","AI"],
-  [17,"FREE CHATBOT AI","https://arena.ai","AI"],
-  [18,"NotebookLM🗒️","https://notebooklm.google.com/","Study"],
-  [19,"LOGO MAKER🎨","https://looka.com","Create"],
-  [20,"BASIC WORK TOOLS ⚙️","https://notegpt.io","Tools"],
-  [21,"Free ChatBots","https://automatio.ai/","AI"],
-  [22,"CODING","https://www.w3schools.com/","Code"],
-  [23,"Research","https://archive.org/","Study"],
-  [24,"EDITING ASSETS","https://mixkit.co","Create"],
-  [25,"Codesolution🖥","https://stackoverflow.com/questions","Code"],
-  [26,"ourservice Code editor","https://g078.github.io/codeeditor/","Code"],
-  [27,"ourservice Litetube","https://g078.github.io/litetube","Watch"],
-  [28,"Capcut free","https://capcutpro.org.in/","Create"],
-  [29,"📽✏️VideoEditor","https://editor.flixier.com","Create"],
-  [30,"IOT projects","https://www.blueprint.io/community","Code"],
-  [31,"🛒Shopping","https://signaturecollection.co.in","Shop"],
-  [32,"📺TV","https://tvgarden.world/tv/sports/O4sDVfeWkHAv9g","Watch"],
-  [33,"🎙VoiceCloning","https://voicebox.sh","AI"],
-  [34,"ALL API","https://github.com/public-apis/public-apis","Code"],
-  [35,"📞HIDEID N CALL","https://www.numlookup.com/","Tools"],
-  [36,"🔍SEARCH EASY","https://www.dorkgpt.com/","Tools"],
-  [37,"👞SHOES","https://thestuffactory.in/","Shop"],
-  [38,"AI TOOL DISCOVER","https://www.aixploria.com/en/","AI"],
-  [39,"IMAGE PROMPTS","https://www.meigen.ai/","AI"],
-  [40,"🎵 ECHO music","https://echomusic.fun/","Watch"],
-  [41,"▶️ YOUTUBE PRO","https://leeapk.com/youtube-pro-apk/download/","Watch"],
-  [42,"GTA","https://gta.deloskiyt.pl/","Games"],
-  [43,"LUCKYPATCHER APK","https://www.luckypatchers.com/lucky-patcher-all-versions/","Apps"],
-  [44,"All site unlocked","https://proxyium.com/#google_vignette","Tools"]
+  ["Rolexcoderz","https://www.rolexcoderz.in/","Study"],
+  ["Multimovies🎞️","https://multimovies.watch/","Watch"],
+  ["Filmyfly🎞️","https://1filmyfly.fyi/","Watch"],
+  ["Moviesmod🎬","https://modlist.in/","Watch"],
+  ["Malvida","https://www.malavida.com/en/android/cat/games","Games"],
+  ["Pc Games🎮","https://gamesleech.com","Games"],
+  ["App Download Pc💻","https://softwareleech.com","Apps"],
+  ["Free games🎮","https://www.freegames33.com/","Games"],
+  ["Poki games🎮","https://poki.com/","Games"],
+  ["Chatgpt","https://www.google.com/aclk?sa=L&pf=1&ai=DChsSEwjjuNH7zPeTAxUQhmYCHRRaAAIYACICCAEQABoCc20&co=1&ase=2&gclid=CjwKCAjw14zPBhAuEiwAP3-Eb9IwjyYRKQ6hYfA1VeqLv0-0WDC77LdE8huUDTiTrMpwyIvlp9xBgxoC6TIQAvD_BwE&cid=CAAS0wHkaNUjsiT9zO-oQNJnfE4H0Gmx9ZRa7KV7jMmpzODpj1ETUKRL_Of4IhVGlXMvvYLp9hFVMgVQJQAShYZADeEu1B_4iIQ6Hn56-NvAVzByenLF3j_8zAqMk-TnaREjq1tKAl5_2xg6QnutuwGKErxVy5K88CTM0W_Rr6pRbxhF4RG1ClACHP1bsmCbb3II0nrqAqFo0qgtJqjj19DqMgAqm2znlgDZ1gxlc9DLGpz-7jeZiZ9ioz6jC867i2q3iWnsT21vxCFAYxifutbzYwrO1NEr&cce=2&category=acrcp_v1_32&sig=AOD64_3sMgKhiMrJjK82pccsltoHPF6fLA&q&nis=4&adurl=https://chatgpt.com","AI"],
+  ["Physicswala📊","https://rolexcoderz.in/PW/","Study"],
+  ["Nexttoppers🎓","https://rolexcoderz.in/NT/","Study"],
+  ["Cricify🏏","https://cricify.org/download/","Watch"],
+  ["Share file📁","https://file.pizza","Tools"],
+  ["PW2","https://www.pwjarvis.com/","Study"],
+  ["FREE AI TOOL","https://www.toolify.ai/","AI"],
+  ["FREE CHATBOT AI","https://arena.ai","AI"],
+  ["NotebookLM🗒️","https://notebooklm.google.com/","Study"],
+  ["LOGO MAKER🎨","https://looka.com","Create"],
+  ["BASIC WORK TOOLS ⚙️","https://notegpt.io","Tools"],
+  ["Free ChatBots","https://automatio.ai/","AI"],
+  ["CODING","https://www.w3schools.com/","Code"],
+  ["Research","https://archive.org/","Study"],
+  ["EDITING ASSETS","https://mixkit.co","Create"],
+  ["Codesolution🖥","https://stackoverflow.com/questions","Code"],
+  ["ourservice Code editor","https://g078.github.io/codeeditor/","Code"],
+  ["ourservice Litetube","https://g078.github.io/litetube","Watch"],
+  ["Capcut free","https://capcutpro.org.in/","Create"],
+  ["📽✏️VideoEditor","https://editor.flixier.com","Create"],
+  ["IOT projects","https://www.blueprint.io/community","Code"],
+  ["🛒Shopping","https://signaturecollection.co.in","Shop"],
+  ["📺TV","https://tvgarden.world/tv/sports/O4sDVfeWkHAv9g","Watch"],
+  ["🎙VoiceCloning","https://voicebox.sh","AI"],
+  ["ALL API","https://github.com/public-apis/public-apis","Code"],
+  ["📞HIDEID N CALL","https://www.numlookup.com/","Tools"],
+  ["🔍SEARCH EASY","https://www.dorkgpt.com/","Tools"],
+  ["👞SHOES","https://thestuffactory.in/","Shop"],
+  ["AI TOOL DISCOVER","https://www.aixploria.com/en/","AI"],
+  ["IMAGE PROMPTS","https://www.meigen.ai/","AI"],
+  ["🎵 ECHO music","https://echomusic.fun/","Watch"],
+  ["▶️ YOUTUBE PRO","https://leeapk.com/youtube-pro-apk/download/","Watch"],
+  ["GTA","https://gta.deloskiyt.pl/","Games"],
+  ["LUCKYPATCHER APK","https://www.luckypatchers.com/lucky-patcher-all-versions/","Apps"],
+  ["All site unlocked","https://proxyium.com/#google_vignette","Tools"]
 ];
 
 const $ = id => document.getElementById(id);
@@ -197,7 +232,8 @@ let cat="All";
 
 function host(u){ try{ return new URL(u).hostname.replace(/^www\./,""); }catch(e){ return u; } }
 
-SITES.forEach(([no,name,url,c])=>{
+SITES.forEach(([name,url,c],i)=>{
+  const no=i+1;
   const a=document.createElement("a");
   a.className="tile"; a.href=url; a.target="_blank"; a.rel="noopener noreferrer";
   a.style.setProperty("--c",COLORS[c]);
@@ -210,7 +246,7 @@ SITES.forEach(([no,name,url,c])=>{
 
 ["All",...Object.keys(COLORS)].forEach(c=>{
   const b=document.createElement("button");
-  const k=c==="All"?SITES.length:SITES.filter(s=>s[3]===c).length;
+  const k=c==="All"?SITES.length:SITES.filter(s=>s[2]===c).length;
   b.className="chip"; b.type="button"; b.append(c);
   const i=document.createElement("i"); i.textContent=k; b.append(i);
   if(COLORS[c]) b.style.setProperty("--c",COLORS[c]);
@@ -232,11 +268,11 @@ function render(){
   empty.classList.toggle("show",n===0);
 }
 q.addEventListener("input",render);
-$("knight").onclick=()=>{
-  q.value=""; cat="All";
-  [...chips.children].forEach((x,i)=>x.setAttribute("aria-pressed",i===0));
-  render(); window.scrollTo({top:0,behavior:"smooth"});
-};
+const about=$("about");
+$("total").textContent=SITES.length;
+$("aboutBtn").onclick=()=>about.showModal();
+$("aboutClose").onclick=()=>about.close();
+about.addEventListener("click",e=>{ if(e.target===about) about.close(); });
 q.addEventListener("keydown",e=>{
   if(e.key==="Enter"){ const f=grid.querySelector(".tile.first"); if(f) window.open(f.href,"_blank","noopener"); }
   if(e.key==="Escape"){ q.value=""; render(); q.blur(); }
